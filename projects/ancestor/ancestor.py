@@ -85,7 +85,8 @@ class Graph:
 def earliest_ancestor(ancestors, starting_node):
 
     a_graph = Graph()
-    #build graph
+    # build graph
+    
     for family in ancestors:
         parent = family[0]
         child = family[1]
@@ -96,17 +97,17 @@ def earliest_ancestor(ancestors, starting_node):
 
     
     lendict = {}
-    #search every entry leading to the input for the longest length
+    # search every entry leading to the input for the longest length
     for i in a_graph.vertices:
         search = a_graph.bfs(i, starting_node)
-
+ 
         if search is not None:
             lendict[i] = len(search)
-    #find key of the longest length search, then pair with original vertices entry
+    # find key of the longest length search, then pair with original vertices entry
     longest_tree = max(lendict.values())
     longest_trees = [k for k,v in lendict.items() if v == longest_tree]
 
-    #if input has no parent return -1
+    # if input has no parent return -1
     if lendict[min(longest_trees)] == 1:
         return -1
     
