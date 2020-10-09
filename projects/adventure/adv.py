@@ -29,8 +29,6 @@ player = Player(world.starting_room)
 
 
 
-
-
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 traversal_path = []
@@ -86,8 +84,6 @@ def get_qmarks(room):
         return possible_directions
 
 
-
-
 def has_question_marks(room):
     if '?' in get_qmarks(room).values():
         return True
@@ -124,12 +120,6 @@ def directions(room_path_list):
     return directions
 
         
-
-
-
-     
-
-
 def bfs2(starting_room):
     q = Queue()
     visited = set()
@@ -186,144 +176,10 @@ visit_dict = {}
 visit_dict[player.current_room.id] = get_qmarks(player.current_room)
 
 traverse()
-'''
 
 
 
 
-def bfs(current_room = player.current_room, trav_ind = 0, pathway = []):
-    """
-    Return a list containing the shortest path from
-    current_room to destination in
-    breath-first order.
-    """
-    print("hi")
-    print(len(visit_dict))
-    print(len(traversal_path))
-    #print("rev", traversal_path[::-1])
-    print("visit dict", visit_dict[current_room.id])
-    
-    if '?' in list(visit_dict[current_room.id].values()):
-        print("returning pathway", pathway)
-        return pathway
-
-    inversetrav = traversal_path[::-1]
-    last_move = inversetrav[trav_ind]
-    print(last_move, "lastmove")
-
-    if last_move == 'n':
-        last_move = 's'
-    elif last_move == 's':
-        last_move = 'n'
-    elif last_move == 'e':
-        last_move = 'w'
-    elif last_move == 'w':
-        last_move = 'e'
-    print(last_move, "changed")
-    pathway.append(last_move)
-    prev_room2 = current_room.get_room_in_direction(last_move)
-
-    f = get_qmarks(current_room)
-    for i in f:
-        print(i)
-        room = current_room.get_room_in_direction(i)
-        r = get_qmarks(room)
-        print(room.items())
-        if '?' in room.items():
-            pass
-
-
-    #return bfs(current_room = )
-    #print("path", pathway)
-
-    return bfs(current_room = prev_room2, trav_ind = trav_ind+1, pathway= pathway)
-
-
-
-
-def traverse():
-    while len(visit_dict) < 500:
-        print("init", visit_dict)
-
-
-        # get directions to go
-        possible_directions = {}
-        for i in player.current_room.get_exits():
-            i = f'{i}'
-            possible_directions[i] = "meow"
-
-        #list with just directions possible
-        possible_dir_list = list(possible_directions.keys())
-
-        # check each direction, if not in visited give value of '?'
-        for direction in possible_dir_list:
-            dir_room = player.current_room.get_room_in_direction(direction)
-
-            #make the values either the room id or a '?'
-            if dir_room.id in list(visit_dict.keys()):
-                possible_directions[direction] = dir_room.id
-            else:
-                possible_directions[direction] = '?'
-
-        
-        visit_dict[player.current_room.id] = possible_directions
-
-        #print("TRAVERSAL_PATH", traversal_path)
-
-        priority = [key for (key,value) in possible_directions.items() if value == '?'] 
-        #find closest question mark with bfs
-        # move
-        print("prioirty", priority)
-        if priority:
-            rand_dir = random.choice(priority)
-
-        
-        #change this after succesful bfs
-        if not priority:
-            path_to_v = bfs(current_room = player.current_room, trav_ind = 0, pathway = [])
-            for i in path_to_v:
-                print(i)
-                player.travel(f'{i}')
-                traversal_path.append(i)
-
-            print("visit dict again", visit_dict[player.current_room.id])
-            priority = [key for (key,value) in visit_dict[player.current_room.id].items() if value == '?'] 
-            rand_dir = random.choice(priority)
-
-
-        print("direction chosen: ", rand_dir)
-        player.travel(rand_dir)
-        traversal_path.append(rand_dir)
-
-        if rand_dir == 'n':
-            prev_room = player.current_room.get_room_in_direction('s').id
-            print(prev_room, "prev room")
-            visit_dict[prev_room]['n'] = player.current_room.id
-            #visit_dict[current_room]['s'] = 
-        if rand_dir == 's':
-            prev_room = player.current_room.get_room_in_direction('n').id
-            print(prev_room, "prev room")
-            visit_dict[prev_room]['s'] = player.current_room.id
-        if rand_dir == 'e':
-            prev_room = player.current_room.get_room_in_direction('w').id
-            print(prev_room, "prev room")
-            visit_dict[prev_room]['e'] = player.current_room.id
-        if rand_dir == 'w':
-            prev_room = player.current_room.get_room_in_direction('e').id
-            print(prev_room, "prev room")
-            visit_dict[prev_room]['w'] = player.current_room.id
-        
-        print("current room: ", player.current_room.id)
-
-        print("length: ", len(traversal_path))
-        print('current', visit_dict, len(visit_dict))
-        print('\n')
-
-
-traverse()
-
-
-'''
 
 
 # TRAVERSAL TEST
@@ -341,7 +197,7 @@ else:
     print("TESTS FAILED: INCOMPLETE TRAVERSAL")
     print(f"{len(room_graph) - len(visited_rooms)} unvisited rooms")
 
-
+"""
 
 #######
 # UNCOMMENT TO WALK AROUND
@@ -355,3 +211,4 @@ while True:
         break
     else:
         print("I did not understand that command.")
+"""
